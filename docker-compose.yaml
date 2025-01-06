@@ -7,7 +7,7 @@ services:
       context: ./svelte
       dockerfile_inline: |
         # syntax=docker/dockerfile:1
-        FROM node:18
+        FROM node:22
         RUN corepack enable pnpm
         WORKDIR /graduate
         USER 1000:1000
@@ -25,7 +25,6 @@ services:
     stdin_open: true
     tty: true
     command: sh -c "yes Y | pnpm install && pnpm run dev --host"
-    # command: sh -c "yes Y | pnpm install && pnpm run dev --host"
     restart: "no"
 #
 # Note: if you want to change something about the docker container for one of the services listed here (e.g. the port forwarding), you have to rerun "docker compose build"! Otherwise, the container won't be rebuilt.
