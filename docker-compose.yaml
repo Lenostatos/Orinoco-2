@@ -1,0 +1,38 @@
+# To install additional packages, use the command
+# docker exec -it <container-name> <command>
+# while the container is running.
+services:
+  svelte:
+    build:
+      context: ./svelte
+      dockerfile_inline: |
+        # syntax=docker/dockerfile:1
+        FROM node:18
+        RUN corepack enable pnpm
+        WORKDIR /graduate
+        USER 1000:1000
+        COPY . .
+      # apparently the copy after switching to a non-root user, makes it so that the bind mount volume is actually not owned by root
+      # without this, you can change the docker compose command to "ls -l" and see that the file owner is always "root"
+    volumes:
+      - ./svelte:/graduate
+    ports:
+      - "5173:5173"
+      - "6006:6006"
+    user: 1000:1000 # so that stuff is not installed with root and additional packages can later be added with docker exec ...
+    group_add:
+      - "1000"
+    stdin_open: true
+    tty: true
+    command: sh -c "yes Y | pnpm install && pnpm run dev --host"
+    # command: sh -c "yes Y | pnpm install && pnpm run dev --host"
+    restart: "no"
+#
+# Note: if you want to change something about the docker container for one of the services listed here (e.g. the port forwarding), you have to rerun "docker compose build"! Otherwise, the container won't be rebuilt.
+#
+#  in order to use the storybook plugin, do the following:
+# - in package.json, add "--no-open" to the "storybook" command. That way, storybook won't try to open the non-existent browser of your docker container
+# - run this docker compose setup in detached mode with "docker compose up -d"
+# - go into the shell of the now running svelte container with "docker exec -it <container-name> bash"
+# - start storybook with "pnpm storybook"
+# if you change the storybook ports for whatever reason, make sure to rebuild the svelte container of this docker compose setup with "docker compose build"! Otherwise the port forwardings listed here will not be in effect as can be seen in the docker desktop GUI
