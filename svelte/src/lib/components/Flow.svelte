@@ -12,7 +12,7 @@
 	import Sidebar from '$lib/components/Sidebar.svelte';
 
 	import '@xyflow/svelte/dist/style.css';
-	import { useDnD } from '$lib/components/util/utils';
+	import { getDnDTypeContext, type DnDType } from './DnDTypeContext.svelte';
 
 	const nodes = writable([
 		{
@@ -52,7 +52,7 @@
 
 	const { screenToFlowPosition } = useSvelteFlow();
 
-	const type = useDnD();
+	const dnd: DnDType = getDnDTypeContext();
 
 	const ondragover = (event: DragEvent) => {
 		event.preventDefault();
@@ -65,7 +65,7 @@
 	const ondrop = (event: DragEvent) => {
 		event.preventDefault();
 
-		if (!$type) {
+		if (!dnd.type) {
 			return;
 		}
 
@@ -76,9 +76,9 @@
 
 		const newNode = {
 			id: `${Math.random()}`,
-			type: $type,
+			type: dnd.type,
 			position,
-			data: { label: `${$type} node` },
+			data: { label: `${dnd.type} node` },
 			origin: [0.5, 0.0]
 		} satisfies Node;
 

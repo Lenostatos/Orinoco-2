@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { useDnD } from '$lib/components/util/utils';
+	import { getDnDTypeContext, type DnDType } from './DnDTypeContext.svelte';
 
-	const type = useDnD();
+	const dnd: DnDType = getDnDTypeContext();
 
 	const onDragStart = (event: DragEvent, nodeType: string) => {
 		if (!event.dataTransfer) {
 			return null;
 		}
 
-		type.set(nodeType);
+		dnd.type = nodeType;
 
 		event.dataTransfer.effectAllowed = 'move';
 	};
