@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { getDnDTypeContext, type DnDType } from './DnDTypeContext.svelte';
+	import { useSvelteFlow } from '@xyflow/svelte';
+
+	const { getNode, updateNode } = useSvelteFlow();
 
 	const dnd: DnDType = getDnDTypeContext();
 
@@ -19,7 +22,7 @@
 		role="button"
 		tabindex="0"
 		class="{nodeType}-node m-2 border border-black py-2 px-4 font-bold rounded-sm cursor-grab"
-		on:dragstart={(event) => onDragStart(event, nodeType)}
+		ondragstart={(event) => onDragStart(event, nodeType)}
 		draggable={true}
 	>
 		{nodeType} Node
@@ -33,4 +36,10 @@
 		{@render button('default')}
 		{@render button('output')}
 	</div>
+	<button
+		onclick={() => {
+			const node = getNode('1');
+			if (node) updateNode('1', { position: { ...node?.position, x: node?.position.x + 100 } });
+		}}>shift first node</button
+	>
 </aside>

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { writable } from 'svelte/store';
 	import {
 		SvelteFlow,
 		Controls,
@@ -7,48 +6,21 @@
 		BackgroundVariant,
 		MiniMap,
 		useSvelteFlow,
-		type Node
+		type Node,
+		type NodeTypes
 	} from '@xyflow/svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 
 	import '@xyflow/svelte/dist/style.css';
 	import { getDnDTypeContext, type DnDType } from './DnDTypeContext.svelte';
+	import ValueNode from './nodeTypes/ValueNode.svelte';
+	import FunctionNode from './nodeTypes/FunctionNode.svelte';
+	import { edgesStore, nodesStore } from '$lib/state/nodesNEdges.svelte';
 
-	const nodes = writable([
-		{
-			id: '1',
-			type: 'input',
-			data: { label: 'Input Node' },
-			position: { x: 150, y: 5 }
-		},
-		{
-			id: '2',
-			type: 'default',
-			data: { label: 'Default Node' },
-			position: { x: 0, y: 150 }
-		},
-		{
-			id: '3',
-			type: 'output',
-			data: { label: 'Output Node' },
-			position: { x: 300, y: 150 }
-		}
-	]);
-
-	const edges = writable([
-		{
-			id: '1-2',
-			type: 'default',
-			source: '1',
-			target: '2'
-		},
-		{
-			id: '1-3',
-			type: 'smoothstep',
-			source: '1',
-			target: '3'
-		}
-	]);
+	const nodeTypes: NodeTypes = {
+		valueNode: ValueNode,
+		functionNode: FunctionNode
+	};
 
 	const { screenToFlowPosition } = useSvelteFlow();
 
@@ -82,13 +54,13 @@
 			origin: [0.5, 0.0]
 		} satisfies Node;
 
-		$nodes.push(newNode);
-		$nodes = $nodes;
+		$nodesStore.push(newNode);
+		nodesStore.set($nodesStore);
 	};
 </script>
 
 <main class="h-screen flex flex-col-reverse">
-	<SvelteFlow {nodes} {edges} fitView {ondragover} {ondrop}>
+	<SvelteFlow nodes={nodesStore} edges={edgesStore} {nodeTypes} fitView {ondragover} {ondrop}>
 		<Controls />
 		<Background variant={BackgroundVariant.Dots} />
 		<MiniMap />
