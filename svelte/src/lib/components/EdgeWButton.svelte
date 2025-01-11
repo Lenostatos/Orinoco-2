@@ -16,7 +16,6 @@
 		targetY,
 		targetPosition,
 		markerEnd = undefined,
-		style = undefined,
 		...restProps
 	}: EdgeProps = $props();
 
@@ -36,7 +35,7 @@
 	const onEdgeClick = () => edges.update((eds) => eds.filter((edge) => edge.id !== id));
 </script>
 
-<BaseEdge path={edgePath} {markerEnd} {style} />
+<BaseEdge path={edgePath} {markerEnd} />
 <EdgeLabelRenderer>
 	<div
 		class="absolute text-xs pointer-events-auto nodrag nopan"
