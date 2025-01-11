@@ -142,20 +142,22 @@
 		<div class="relative w-48">
 			{#if open}
 				<div
-					class="absolute inset-x-0 top-2 z-50 divide-y-2 divide-sky-300 rounded-2xl bg-sky-400 overflow-scroll max-h-52"
+					class="absolute inset-x-0 top-2 z-50 divide-y-2 divide-sky-300 rounded-2xl bg-sky-400 overflow-scroll max-h-56 p-2 text-sm"
 					transition:fly={{ y: -10, duration: 150 }}
 					onscroll={stopPropagation(() => {})}
 					onwheel={stopPropagation(() => {})}
 				>
 					{#each nodeFunctionCategories as functionCategory}
 						<details>
-							<summary onclick={stopPropagation(() => {})}>{functionCategory.id}</summary>
+							<summary class="py-1" onclick={stopPropagation(() => {})}
+								>{functionCategory.id}</summary
+							>
 							<ul>
 								{#each functionCategory.functionIds as functionId}
 									<li class={['flex flex-col items-stretch']}>
 										<button
 											class={[
-												'p-2 py-2 hover:bg-sky-300',
+												'p-1 hover:bg-sky-300',
 												functionId === selectedFunctionId && 'rounded-sm bg-sky-300'
 											]}
 											onclick={stopPropagation(() => {
