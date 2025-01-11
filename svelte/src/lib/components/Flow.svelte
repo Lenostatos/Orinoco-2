@@ -7,7 +7,8 @@
 		MiniMap,
 		useSvelteFlow,
 		type Node,
-		type NodeTypes
+		type NodeTypes,
+		MarkerType
 	} from '@xyflow/svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 
@@ -73,7 +74,10 @@
 		fitView
 		{ondragover}
 		{ondrop}
-		defaultEdgeOptions={{ type: 'edgeWButton' }}
+		defaultEdgeOptions={{
+			type: 'edgeWButton',
+			markerEnd: { type: MarkerType.ArrowClosed, width: 25, height: 25 }
+		}}
 	>
 		<Controls />
 		<Background variant={BackgroundVariant.Dots} />
