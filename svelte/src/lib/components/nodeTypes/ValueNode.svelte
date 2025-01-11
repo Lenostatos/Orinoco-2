@@ -16,7 +16,6 @@
 
 <div>
 	<Handle type="target" position={Position.Top} />
-	<div>text</div>
 	<div>
 		<input
 			value={data.text}

@@ -1,16 +1,24 @@
-type NodeFunctionData = {
+export type NodeFunctionInputData = {
+	name: string;
+	type: 'number' | 'string' | 'boolean' | 'any';
+	arrayInput?: true;
+};
+
+export type NodeFunctionOutputData = {
+	type: 'number' | 'string' | 'boolean' | 'any';
+	description?: string;
+};
+
+export type NodeFunctionData = {
 	id: string;
 	names: Array<string>;
 	description?: string;
-	inputs: Array<{ name: string; type: 'number' | 'string' | 'boolean' | 'any'; arrayInput?: true }>;
-	output: {
-		type: 'number' | 'string' | 'boolean' | 'any';
-		description?: string;
-	};
+	inputs: Array<NodeFunctionInputData>;
+	output: NodeFunctionOutputData;
 	function: (...args: Array<string | number | boolean>) => string | number | boolean;
 };
 
-const nodeFunctions: Array<NodeFunctionData> = [
+export const nodeFunctionData: Array<NodeFunctionData> = [
 	{
 		id: 'gabriel',
 		names: ['GABRIEL'],
@@ -23,6 +31,7 @@ const nodeFunctions: Array<NodeFunctionData> = [
 			}
 		],
 		output: { type: 'string' },
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		function: (...inputs) => 'popo'
 	},
 	// Arithmetic
@@ -711,10 +720,10 @@ const nodeFunctions: Array<NodeFunctionData> = [
 	}
 ];
 
-const nodeFunctionCategories = [
+export const nodeFunctionCategories = [
 	{
 		id: 'arithmetic',
-		functions: [
+		functionIds: [
 			'summation',
 			'subtraction',
 			'multiplication',
@@ -736,15 +745,15 @@ const nodeFunctionCategories = [
 	},
 	{
 		id: 'statistical',
-		functions: ['average', 'max', 'min', 'random']
+		functionIds: ['average', 'max', 'min', 'random']
 	},
 	{
 		id: 'logical',
-		functions: ['equals', 'less_than', 'greater_than', 'if', 'and', 'or', 'not']
+		functionIds: ['equals', 'less_than', 'greater_than', 'if', 'and', 'or', 'not']
 	},
 	{
 		id: 'text',
-		functions: [
+		functionIds: [
 			'concatenate',
 			'length',
 			'upper_case',
@@ -760,7 +769,7 @@ const nodeFunctionCategories = [
 	},
 	{
 		id: 'time',
-		functions: [
+		functionIds: [
 			'now',
 			'today',
 			'year',
@@ -775,8 +784,6 @@ const nodeFunctionCategories = [
 	},
 	{
 		id: 'misc',
-		functions: ['gabriel', 'count']
+		functionIds: ['gabriel', 'count']
 	}
 ];
-
-export { nodeFunctions, nodeFunctionCategories };

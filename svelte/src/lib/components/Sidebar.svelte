@@ -17,7 +17,7 @@
 	};
 </script>
 
-{#snippet button(nodeType: 'input' | 'default' | 'output')}
+{#snippet button(nodeType: 'valueNode' | 'functionNode')}
 	<div
 		role="button"
 		tabindex="0"
@@ -25,21 +25,14 @@
 		ondragstart={(event) => onDragStart(event, nodeType)}
 		draggable={true}
 	>
-		{nodeType} Node
+		{nodeType}
 	</div>
 {/snippet}
 
 <aside class="w-full bg-gray-100 text-xs flex flex-col justify-center items-center">
 	<div class="my-4 text-sm">You can drag these nodes to the pane below.</div>
 	<div class="flex justify-center items-center">
-		{@render button('input')}
-		{@render button('default')}
-		{@render button('output')}
+		{@render button('valueNode')}
+		{@render button('functionNode')}
 	</div>
-	<button
-		onclick={() => {
-			const node = getNode('1');
-			if (node) updateNode('1', { position: { ...node?.position, x: node?.position.x + 100 } });
-		}}>shift first node</button
-	>
 </aside>
