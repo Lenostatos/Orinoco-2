@@ -16,10 +16,15 @@
 	import ValueNode from './nodeTypes/ValueNode.svelte';
 	import FunctionNode from './nodeTypes/FunctionNode.svelte';
 	import { edgesStore, nodesStore } from '$lib/state/nodesNEdges.svelte';
+	import EdgeWButton from './EdgeWButton.svelte';
 
 	const nodeTypes: NodeTypes = {
 		valueNode: ValueNode,
 		functionNode: FunctionNode
+	};
+
+	const edgeTypes = {
+		edgeWButton: EdgeWButton
 	};
 
 	const { screenToFlowPosition } = useSvelteFlow();
@@ -60,7 +65,16 @@
 </script>
 
 <main class="h-screen flex flex-col-reverse">
-	<SvelteFlow nodes={nodesStore} edges={edgesStore} {nodeTypes} fitView {ondragover} {ondrop}>
+	<SvelteFlow
+		nodes={nodesStore}
+		edges={edgesStore}
+		{nodeTypes}
+		{edgeTypes}
+		fitView
+		{ondragover}
+		{ondrop}
+		defaultEdgeOptions={{ type: 'edgeWButton' }}
+	>
 		<Controls />
 		<Background variant={BackgroundVariant.Dots} />
 		<MiniMap />
