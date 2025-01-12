@@ -1,9 +1,10 @@
-name: build-n-test-workflow
+name: build-test-deploy-workflow
 on: 
   push:
     branches:
     - main
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +29,7 @@ jobs:
       - name: Build app
         run: pnpm run build
         working-directory: ./svelte
+        
   test:
     needs: build
     runs-on: ubuntu-latest
@@ -53,3 +55,50 @@ jobs:
       - name: Run unit tests
         run: pnpm run test:unit
         working-directory: ./svelte
+        
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write     
+      id-token: write
+    environment:
+      name: production
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          package_json_file: svelte/package.json
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.1.0
+        with:
+          # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
+          node-version: 22.x
+          # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.
+          cache: pnpm
+          # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
+          cache-dependency-path: svelte/pnpm-lock.yaml
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5.0.0
+        with:
+          static_site_generator: sveltekit
+      - name: Install everything
+        run: pnpm install
+        working-directory: ./svelte
+      - name: Build app
+        run: pnpm run build
+        working-directory: ./svelte 
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          # Path of the directory containing the static assets.
+          path: ./svelte/build
+      - name: Deploy GitHub Pages site
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5
