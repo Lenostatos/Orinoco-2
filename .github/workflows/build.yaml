@@ -9,6 +9,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          package_json_file: svelte/package.json
       - name: Setup Node.js environment
         uses: actions/setup-node@v4.1.0
         with:
@@ -30,6 +34,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          package_json_file: svelte/package.json
       - name: Setup Node.js environment
         uses: actions/setup-node@v4.1.0
         with:
