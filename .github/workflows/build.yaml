@@ -44,6 +44,6 @@ jobs:
       - name: Install everything
         run: yes Y | pnpm install
       - name: Run unit tests
-      - run: yes Y | pnpm run test:unit
+        run: yes Y | pnpm run test:unit
           
           
