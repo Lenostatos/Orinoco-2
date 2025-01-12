@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getDnDTypeContext, type DnDType } from './DnDTypeContext.svelte';
 	import { useSvelteFlow } from '@xyflow/svelte';
+	import * as m from '$lib/paraglide/messages';
 
 	const { getNode, updateNode } = useSvelteFlow();
 
@@ -25,12 +26,18 @@
 		ondragstart={(event) => onDragStart(event, nodeType)}
 		draggable={true}
 	>
-		{nodeType}
+		{#if nodeType === 'valueNode'}
+			{m.value_node()}
+		{:else if nodeType === 'functionNode'}
+			{m.function_node()}
+		{:else}
+			{nodeType}
+		{/if}
 	</div>
 {/snippet}
 
 <aside class="w-full bg-gray-100 text-xs flex flex-col justify-center items-center">
-	<div class="my-4 text-sm">You can drag these nodes to the pane below.</div>
+	<div class="my-4 text-sm">{m.draggable_nodes_hint()}</div>
 	<div class="flex justify-center items-center">
 		{@render button('valueNode')}
 		{@render button('functionNode')}

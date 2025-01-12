@@ -11,6 +11,7 @@
 	} from '@xyflow/svelte';
 	import { fromStore } from 'svelte/store';
 	import { fly } from 'svelte/transition';
+	import * as m from '$lib/paraglide/messages';
 
 	let { id: thisId, data, ...restProps }: NodeProps = $props();
 
@@ -50,7 +51,14 @@
 
 	let selectedFunctionId: string | undefined = $state(undefined);
 
-	const selectedFunctionData = $derived(nodeFunctionData.find((f) => f.id === selectedFunctionId));
+	const getFunctionData = (functionId: string | undefined) => {
+		if (!functionId) {
+			return undefined;
+		}
+		return nodeFunctionData.find((f) => f.id === functionId);
+	};
+
+	const selectedFunctionData = $derived(getFunctionData(selectedFunctionId));
 
 	$effect(() => {
 		if (!sourceNodeTexts) {
@@ -132,9 +140,9 @@
 				class="rounded-full p-2 hover:bg-sky-300 w-full"
 			>
 				{#if selectedFunctionId}
-					<p class="font-bold">{selectedFunctionId}</p>
+					<p class="font-bold">{selectedFunctionData?.names[0]}</p>
 				{:else}
-					<p class="italic">select a function</p>
+					<p class="italic">{m.function_selection_prompt()}</p>
 				{/if}
 			</button>
 		</div>
@@ -150,7 +158,7 @@
 					{#each nodeFunctionCategories as functionCategory}
 						<details>
 							<summary class="py-1" onclick={stopPropagation(() => {})}
-								>{functionCategory.id}</summary
+								>{functionCategory.name}</summary
 							>
 							<ul>
 								{#each functionCategory.functionIds as functionId}
@@ -165,7 +173,7 @@
 												open = false;
 											})}
 										>
-											<p class="">{functionId}</p>
+											<p class="">{getFunctionData(functionId)?.names[0]}</p>
 										</button>
 									</li>
 								{/each}
