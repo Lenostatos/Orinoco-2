@@ -17,7 +17,8 @@ services:
     volumes:
       - ./svelte:/graduate
     ports:
-      - "5173:5173"
+      - "4173:4173" # build preview
+      - "5173:5173" # dev
       - "6006:6006"
     user: 1000:1000 # so that stuff is not installed with root and additional packages can later be added with docker exec ...
     group_add:

@@ -1,0 +1,6 @@
+# Call with
+# docker-compose -f docker-compose.yaml -f docker-compose.override.build.yaml up
+
+services:
+  svelte:
+    command: sh -c "yes Y | pnpm run build && pnpm run preview --host"
