@@ -22,12 +22,12 @@ jobs:
           cache: pnpm
           # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
           cache-dependency-path: svelte/pnpm-lock.yaml
-      - name: Change to svelte subdirectory
-        run: cd svelte
       - name: Install everything
-        run: yes Y | pnpm install
+        run: pnpm install
+        working-directory: ./svelte
       - name: Build app
-        run: yes Y | pnpm run build
+        run: pnpm run build
+        working-directory: ./svelte
   test:
     needs: build
     runs-on: ubuntu-latest
@@ -47,11 +47,9 @@ jobs:
           cache: pnpm
           # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
           cache-dependency-path: svelte/pnpm-lock.yaml
-      - name: Change to svelte subdirectory
-        run: cd svelte
       - name: Install everything
-        run: yes Y | pnpm install
+        run: pnpm install
+        working-directory: ./svelte
       - name: Run unit tests
-        run: yes Y | pnpm run test:unit
-          
-          
+        run: pnpm run test:unit
+        working-directory: ./svelte
