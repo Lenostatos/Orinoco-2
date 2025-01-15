@@ -13,7 +13,7 @@
 	import { fly } from 'svelte/transition';
 	import * as m from '$lib/paraglide/messages';
 
-	let { id: thisId, data, ...restProps }: NodeProps = $props();
+	let { id: thisId, data }: NodeProps = $props();
 
 	const { updateNodeData } = useSvelteFlow();
 
@@ -98,7 +98,9 @@
 			updateNodeData(thisId, { text: undefined });
 		} else {
 			updateNodeData(thisId, {
-				text: selectedFunctionData.function(...(functionInputs as Array<string | number | boolean>))
+				text: selectedFunctionData
+					.function(...(functionInputs as Array<string | number | boolean>))
+					.toString()
 			});
 		}
 	});

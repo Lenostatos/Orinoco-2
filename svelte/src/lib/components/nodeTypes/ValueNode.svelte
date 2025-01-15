@@ -3,23 +3,74 @@
 </script>
 
 <script lang="ts">
-	import { Handle, Position, type NodeProps, useSvelteFlow } from '@xyflow/svelte';
+	import {
+		Handle,
+		Position,
+		type NodeProps,
+		useSvelteFlow,
+		useHandleConnections,
+		useNodesData
+	} from '@xyflow/svelte';
+	import { fromStore } from 'svelte/store';
 
 	interface ValueNodeProps extends NodeProps {
 		data: ValueNodeData;
 	}
 
-	let { id, data, ...restProps }: ValueNodeProps = $props();
+	let { id: thisId, data }: ValueNodeProps = $props();
 
 	const { updateNodeData } = useSvelteFlow();
+
+	const sourceConnections = $derived(
+		fromStore(
+			// This function call is hard to read for me
+			// It means: get the connections to all nodes which are a source for this node here
+			useHandleConnections({
+				nodeId: thisId,
+				type: 'target'
+			})
+		).current
+	);
+
+	const sourceNodeText = $derived.by(() => {
+		if (sourceConnections.length === 0) {
+			return undefined;
+		}
+
+		const sourceNodeIds = sourceConnections.map((c) => c.source);
+
+		const sourceNodeData = useNodesData(sourceNodeIds);
+
+		const sourceNodeDataTexts = fromStore(sourceNodeData).current?.map((d) => d?.data?.text);
+
+		for (const sourceNodeDataText of sourceNodeDataTexts) {
+			if (typeof sourceNodeDataText !== 'string' && typeof sourceNodeDataText !== 'undefined') {
+				console.error('Unexpected node data.text type:', typeof sourceNodeDataText);
+				throw new Error('Function node data.text should either be a string or undefined.');
+			}
+		}
+
+		return sourceNodeDataTexts[0] as string | undefined;
+	});
+
+	const isOutput = $derived(sourceConnections.length === 1);
+
+	const value = $derived.by(() => {
+		if (isOutput) {
+			return sourceNodeText;
+		} else {
+			return data.text;
+		}
+	});
 </script>
 
 <div>
-	<Handle type="target" position={Position.Top} />
+	<Handle type="target" position={Position.Top} isConnectable={sourceConnections.length <= 1} />
 	<div>
 		<input
-			value={data.text}
-			oninput={(event) => updateNodeData(id, { text: event.currentTarget.value })}
+			{value}
+			oninput={(event) => updateNodeData(thisId, { text: event.currentTarget.value })}
+			readonly={isOutput}
 		/>
 	</div>
 	<Handle type="source" position={Position.Bottom} />
