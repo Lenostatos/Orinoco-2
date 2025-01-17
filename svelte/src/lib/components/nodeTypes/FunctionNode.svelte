@@ -2,7 +2,6 @@
 	import { nodeFunctionCategories, nodeFunctionData } from '$lib/nodeFunctions';
 	import { getParsingFunctionFor } from '$lib/nodeFunctionUtils';
 	import {
-		Handle,
 		type NodeProps,
 		useSvelteFlow,
 		useHandleConnections,
@@ -11,6 +10,7 @@
 	} from '@xyflow/svelte';
 	import { fromStore } from 'svelte/store';
 	import { fly } from 'svelte/transition';
+	import CustomHandle from '../CustomHandle.svelte';
 	import * as m from '$lib/paraglide/messages';
 
 	let { id: thisId, data }: NodeProps = $props();
@@ -130,7 +130,7 @@
 <svelte:document onclick={() => (open = false)} />
 
 <div class="">
-	<Handle
+	<CustomHandle
 		type="target"
 		position={Position.Top}
 		isConnectable={sourceConnections.length < numInputs}
@@ -187,5 +187,5 @@
 		</div>
 	</div>
 	<div>{data.text}</div>
-	<Handle type="source" position={Position.Bottom} />
+	<CustomHandle type="source" position={Position.Bottom} />
 </div>

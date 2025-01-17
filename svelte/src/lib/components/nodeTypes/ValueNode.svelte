@@ -12,6 +12,7 @@
 		useNodesData
 	} from '@xyflow/svelte';
 	import { fromStore } from 'svelte/store';
+	import CustomHandle from '../CustomHandle.svelte';
 
 	interface ValueNodeProps extends NodeProps {
 		data: ValueNodeData;
@@ -65,7 +66,11 @@
 </script>
 
 <div>
-	<Handle type="target" position={Position.Top} isConnectable={sourceConnections.length <= 1} />
+	<CustomHandle
+		type="target"
+		position={Position.Top}
+		isConnectable={sourceConnections.length <= 1}
+	/>
 	<div>
 		<input
 			{value}
@@ -73,5 +78,5 @@
 			readonly={isOutput}
 		/>
 	</div>
-	<Handle type="source" position={Position.Bottom} />
+	<CustomHandle type="source" position={Position.Bottom} />
 </div>

@@ -76,7 +76,7 @@
 		{ondrop}
 		defaultEdgeOptions={{
 			type: 'edgeWButton',
-			markerEnd: { type: MarkerType.ArrowClosed, width: 25, height: 25 }
+			markerEnd: { type: MarkerType.ArrowClosed, width: 25, height: 25, color: 'rgb(203 213 225)' }
 		}}
 	>
 		<Controls />
