@@ -142,7 +142,7 @@
 				class="rounded-full p-2 hover:bg-sky-300 w-full"
 			>
 				{#if selectedFunctionId}
-					<p class="font-bold">{selectedFunctionData?.names[0]}</p>
+					<p class="font-bold">{selectedFunctionData?.names[0]()}</p>
 				{:else}
 					<p class="italic">{m.function_selection_prompt()}</p>
 				{/if}
@@ -160,7 +160,7 @@
 					{#each nodeFunctionCategories as functionCategory}
 						<details>
 							<summary class="py-1" onclick={stopPropagation(() => {})}
-								>{functionCategory.name}</summary
+								>{functionCategory.name()}</summary
 							>
 							<ul>
 								{#each functionCategory.functionIds as functionId}
@@ -175,7 +175,7 @@
 												open = false;
 											})}
 										>
-											<p class="">{getFunctionData(functionId)?.names[0]}</p>
+											<p class="">{getFunctionData(functionId)?.names[0]()}</p>
 										</button>
 									</li>
 								{/each}

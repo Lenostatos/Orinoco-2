@@ -13,7 +13,7 @@ export type NodeFunctionOutputData = {
 
 export type NodeFunctionData = {
 	id: string;
-	names: Array<string>;
+	names: Array<() => string>;
 	description?: string;
 	inputs: Array<NodeFunctionInputData>;
 	output: NodeFunctionOutputData;
@@ -21,25 +21,10 @@ export type NodeFunctionData = {
 };
 
 export const nodeFunctionData: Array<NodeFunctionData> = [
-	{
-		id: 'gabriel',
-		names: ['GABRIEL'],
-		description: 'Always returns what you need the most... or least. Müsst ihr wissen.',
-		inputs: [
-			{
-				type: 'any',
-				name: 'input',
-				arrayInput: true
-			}
-		],
-		output: { type: 'string' },
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		function: (...inputs) => 'popo'
-	},
 	// Arithmetic
 	{
 		id: 'summation',
-		names: ['+', m.fn_sum()],
+		names: [() => '+', m.fn_sum],
 		description: 'Calculates the sum of all input numbers.',
 		inputs: [{ name: 'summand', type: 'number', arrayInput: true }],
 		output: { type: 'number', description: 'The sum of input numbers' },
@@ -52,7 +37,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'subtraction',
-		names: ['-'],
+		names: [() => '-'],
 		description: 'Subtracts the second number from the first.',
 		inputs: [
 			{ name: 'minuend', type: 'number' },
@@ -68,7 +53,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'multiplication',
-		names: ['*', m.fn_product()],
+		names: [() => '*', m.fn_product],
 		description: 'Calculates the product of input numbers.',
 		inputs: [{ name: 'factor', type: 'number', arrayInput: true }],
 		output: { type: 'number', description: 'The product of input numbers' },
@@ -81,7 +66,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'division',
-		names: ['/'],
+		names: [() => '/'],
 		description: 'Divides the first number by the second.',
 		inputs: [
 			{ name: 'dividend', type: 'number' },
@@ -100,7 +85,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'identity',
-		names: [m.fn_identity()],
+		names: [m.fn_identity],
 		description: 'Returns the input number unchanged.',
 		inputs: [{ name: 'value', type: 'number' }],
 		output: { type: 'number', description: 'The same as the input number' },
@@ -113,7 +98,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'exponentiation',
-		names: ['^', m.fn_power()],
+		names: [() => '^', m.fn_power],
 		description: 'Raises the base to the power of the exponent.',
 		inputs: [
 			{ name: 'base', type: 'number' },
@@ -129,7 +114,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'square',
-		names: [m.fn_square()],
+		names: [m.fn_square],
 		description: 'Returns the square of a number.',
 		inputs: [{ name: 'number', type: 'number' }],
 		output: { type: 'number', description: 'The square of the number' },
@@ -142,7 +127,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'sqrt',
-		names: [m.fn_sqrt()],
+		names: [m.fn_sqrt],
 		description: 'Calculates the square root of the input number.',
 		inputs: [{ name: 'value', type: 'number' }],
 		output: { type: 'number', description: 'The square root of the input number' },
@@ -155,7 +140,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'is_even',
-		names: [m.fn_is_even()],
+		names: [m.fn_is_even],
 		description: 'Checks if a number is even.',
 		inputs: [{ name: 'number', type: 'number' }],
 		output: { type: 'boolean', description: 'True if the number is even, otherwise false' },
@@ -168,7 +153,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'quotient',
-		names: [m.fn_quotient()],
+		names: [m.fn_quotient],
 		description: 'Returns the integer division result of two numbers.',
 		inputs: [
 			{ name: 'numerator', type: 'number' },
@@ -184,7 +169,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'remainder',
-		names: [m.fn_remainder()],
+		names: [m.fn_remainder],
 		description: 'Returns the remainder of a division.',
 		inputs: [
 			{ name: 'numerator', type: 'number' },
@@ -200,7 +185,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'absolute',
-		names: [m.fn_absolute()],
+		names: [m.fn_absolute],
 		description: 'Returns the absolute value of a number.',
 		inputs: [{ name: 'number', type: 'number' }],
 		output: { type: 'number', description: 'The absolute value' },
@@ -213,7 +198,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'sign',
-		names: [m.fn_sign()],
+		names: [m.fn_sign],
 		description: 'Returns the sign of a number.',
 		inputs: [{ name: 'number', type: 'number' }],
 		output: { type: 'number', description: 'The sign of the number: -1, 0, or 1' },
@@ -226,7 +211,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'round',
-		names: [m.fn_round()],
+		names: [m.fn_round],
 		description: 'Rounds a number to the nearest integer.',
 		inputs: [{ name: 'number', type: 'number' }],
 		output: { type: 'number', description: 'The rounded number' },
@@ -239,7 +224,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'round_up',
-		names: [m.fn_round_up()],
+		names: [m.fn_round_up],
 		description: 'Rounds a number up to the nearest integer.',
 		inputs: [{ name: 'number', type: 'number' }],
 		output: { type: 'number', description: 'The rounded-up number' },
@@ -252,7 +237,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'round_down',
-		names: [m.fn_round_down()],
+		names: [m.fn_round_down],
 		description: 'Rounds a number down to the nearest integer.',
 		inputs: [{ name: 'number', type: 'number' }],
 		output: { type: 'number', description: 'The rounded-down number' },
@@ -265,7 +250,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'ceiling',
-		names: [m.fn_ceiling()],
+		names: [m.fn_ceiling],
 		description: 'Rounds a number up to the nearest multiple of a given significance.',
 		inputs: [
 			{ name: 'number', type: 'number' },
@@ -282,7 +267,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	// Statistical
 	{
 		id: 'average',
-		names: [m.fn_average()],
+		names: [m.fn_average],
 		description: 'Calculates the average of input numbers.',
 		inputs: [{ name: 'value', type: 'number', arrayInput: true }],
 		output: { type: 'number', description: 'The average of input numbers' },
@@ -295,7 +280,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'max',
-		names: [m.fn_max()],
+		names: [m.fn_max],
 		description: 'Returns the maximum of input numbers.',
 		inputs: [{ name: 'value', type: 'number', arrayInput: true }],
 		output: { type: 'number', description: 'The maximum of input numbers' },
@@ -308,7 +293,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'min',
-		names: [m.fn_min()],
+		names: [m.fn_min],
 		description: 'Returns the minimum of input numbers.',
 		inputs: [{ name: 'value', type: 'number', arrayInput: true }],
 		output: { type: 'number', description: 'The minimum of input numbers' },
@@ -321,7 +306,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'random',
-		names: [m.fn_random()],
+		names: [m.fn_random],
 		description: 'Generates a random number between 0 and 1.',
 		inputs: [],
 		output: { type: 'number', description: 'A random number between 0 and 1' },
@@ -330,7 +315,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	// Logical
 	{
 		id: 'equals',
-		names: ['='],
+		names: [() => '='],
 		description: 'Checks if two values are equal.',
 		inputs: [
 			{ name: 'value1', type: 'any' },
@@ -341,7 +326,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'less_than',
-		names: ['<'],
+		names: [() => '<'],
 		description: 'Checks if the first value is less than the second.',
 		inputs: [
 			{ name: 'value1', type: 'number' },
@@ -352,7 +337,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'greater_than',
-		names: ['>'],
+		names: [() => '>'],
 		description: 'Checks if the first value is greater than the second.',
 		inputs: [
 			{ name: 'value1', type: 'number' },
@@ -363,7 +348,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'if',
-		names: [m.fn_if()],
+		names: [m.fn_if],
 		description: 'Returns one value if a condition is true, and another if it is false.',
 		inputs: [
 			{ name: 'condition', type: 'boolean' },
@@ -376,7 +361,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'and',
-		names: [m.fn_and()],
+		names: [m.fn_and],
 		description: 'Checks if all conditions are true.',
 		inputs: [{ name: 'condition', type: 'boolean', arrayInput: true }],
 		output: { type: 'boolean', description: 'True if all conditions are true, otherwise false' },
@@ -384,7 +369,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'or',
-		names: [m.fn_or()],
+		names: [m.fn_or],
 		description: 'Checks if any condition is true.',
 		inputs: [{ name: 'condition', type: 'boolean', arrayInput: true }],
 		output: { type: 'boolean', description: 'True if any condition is true, otherwise false' },
@@ -392,7 +377,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'not',
-		names: [m.fn_not()],
+		names: [m.fn_not],
 		description: 'Inverts a boolean value.',
 		inputs: [{ name: 'value', type: 'boolean' }],
 		output: { type: 'boolean', description: 'The opposite of the input value' },
@@ -401,7 +386,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	// Text
 	{
 		id: 'concatenate',
-		names: [m.fn_concatenate()],
+		names: [m.fn_concatenate],
 		description: 'Joins multiple strings into one.',
 		inputs: [{ name: 'text', type: 'string', arrayInput: true }],
 		output: { type: 'string', description: 'The concatenated string' },
@@ -409,7 +394,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'length',
-		names: [m.fn_length()],
+		names: [m.fn_length],
 		description: 'Returns the length of a string.',
 		inputs: [{ name: 'text', type: 'string' }],
 		output: { type: 'number', description: 'The length of the string' },
@@ -422,7 +407,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'upper_case',
-		names: [m.fn_upper_case()],
+		names: [m.fn_upper_case],
 		description: 'Converts a string to uppercase.',
 		inputs: [{ name: 'text', type: 'string' }],
 		output: { type: 'string', description: 'The string in uppercase' },
@@ -435,7 +420,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'lower_case',
-		names: [m.fn_lower_case()],
+		names: [m.fn_lower_case],
 		description: 'Converts a string to lowercase.',
 		inputs: [{ name: 'text', type: 'string' }],
 		output: { type: 'string', description: 'The string in lowercase' },
@@ -448,7 +433,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'substitute',
-		names: [m.fn_substitute()],
+		names: [m.fn_substitute],
 		description: 'Replaces part of a string with another string.',
 		inputs: [
 			{ name: 'text', type: 'string' },
@@ -469,7 +454,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'find',
-		names: [m.fn_find()],
+		names: [m.fn_find],
 		description: 'Finds the position of a substring in a string.',
 		inputs: [
 			{ name: 'text', type: 'string' },
@@ -485,7 +470,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'mid',
-		names: [m.fn_mid()],
+		names: [m.fn_mid],
 		description: 'Extracts a substring from a string.',
 		inputs: [
 			{ name: 'text', type: 'string' },
@@ -502,7 +487,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'char_code',
-		names: [m.fn_char_code()],
+		names: [m.fn_char_code],
 		description: 'Returns the character for a given Unicode code point.',
 		inputs: [{ name: 'code', type: 'number' }],
 		output: { type: 'string', description: 'The character for the given code point' },
@@ -515,7 +500,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'char_code_value',
-		names: [m.fn_char_code_value()],
+		names: [m.fn_char_code_value],
 		description: 'Returns the Unicode code point of the first character in the input string.',
 		inputs: [{ name: 'char', type: 'string' }],
 		output: { type: 'number', description: 'The Unicode code point of the character' },
@@ -528,7 +513,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'left',
-		names: [m.fn_left()],
+		names: [m.fn_left],
 		description: 'Extracts a specified number of characters from the beginning of a string.',
 		inputs: [
 			{ name: 'text', type: 'string' },
@@ -544,7 +529,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'right',
-		names: [m.fn_right()],
+		names: [m.fn_right],
 		description: 'Extracts a specified number of characters from the end of a string.',
 		inputs: [
 			{ name: 'text', type: 'string' },
@@ -561,7 +546,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	// Date and Time
 	{
 		id: 'now',
-		names: [m.fn_now()],
+		names: [m.fn_now],
 		description: 'Returns the current date and time.',
 		inputs: [],
 		output: { type: 'string', description: 'The current date and time as a string' },
@@ -569,7 +554,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'today',
-		names: [m.fn_today()],
+		names: [m.fn_today],
 		description: 'Returns the current date.',
 		inputs: [],
 		output: { type: 'string', description: 'The current date as a string' },
@@ -577,7 +562,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'year',
-		names: [m.fn_year()],
+		names: [m.fn_year],
 		description: 'Returns the year from a given date.',
 		inputs: [{ name: 'date', type: 'string' }],
 		output: { type: 'number', description: 'The year of the input date' },
@@ -594,7 +579,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'weekday',
-		names: [m.fn_weekday()],
+		names: [m.fn_weekday],
 		description: 'Returns the day of the week from a given date.',
 		inputs: [{ name: 'date', type: 'string' }],
 		output: { type: 'number', description: 'The weekday (1 for Sunday, 7 for Saturday)' },
@@ -611,7 +596,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'month',
-		names: [m.fn_month()],
+		names: [m.fn_month],
 		description: 'Returns the month from a given date.',
 		inputs: [{ name: 'date', type: 'string' }],
 		output: { type: 'number', description: 'The month as a number (1-12)' },
@@ -628,7 +613,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'hour',
-		names: [m.fn_hour()],
+		names: [m.fn_hour],
 		description: 'Returns the hour from a given time.',
 		inputs: [{ name: 'time', type: 'string' }],
 		output: { type: 'number', description: 'The hour (0-23)' },
@@ -645,7 +630,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'minute',
-		names: [m.fn_minute()],
+		names: [m.fn_minute],
 		description: 'Returns the minute from a given time.',
 		inputs: [{ name: 'time', type: 'string' }],
 		output: { type: 'number', description: 'The minute (0-59)' },
@@ -662,7 +647,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'second',
-		names: [m.fn_second()],
+		names: [m.fn_second],
 		description: 'Returns the second from a given time.',
 		inputs: [{ name: 'time', type: 'string' }],
 		output: { type: 'number', description: 'The second (0-59)' },
@@ -679,7 +664,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'date',
-		names: [m.fn_date()],
+		names: [m.fn_date],
 		description: 'Creates a date from year, month, and day.',
 		inputs: [
 			{ name: 'year', type: 'number' },
@@ -696,7 +681,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'time',
-		names: [m.fn_time()],
+		names: [m.fn_time],
 		description: 'Creates a time from hours, minutes, and seconds.',
 		inputs: [
 			{ name: 'hours', type: 'number' },
@@ -713,7 +698,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 	},
 	{
 		id: 'count',
-		names: [m.fn_count()],
+		names: [m.fn_count],
 		description: 'Counts the number of numeric values in the input.',
 		inputs: [{ name: 'values', type: 'number', arrayInput: true }],
 		output: { type: 'number', description: 'The count of numeric values' },
@@ -729,7 +714,7 @@ export const nodeFunctionData: Array<NodeFunctionData> = [
 export const nodeFunctionCategories = [
 	{
 		id: 'arithmetic',
-		name: m.fn_category_arithmetic(),
+		name: m.fn_category_arithmetic,
 		functionIds: [
 			'summation',
 			'subtraction',
@@ -752,17 +737,17 @@ export const nodeFunctionCategories = [
 	},
 	{
 		id: 'statistical',
-		name: m.fn_category_statistics(),
+		name: m.fn_category_statistics,
 		functionIds: ['average', 'max', 'min', 'random']
 	},
 	{
 		id: 'logical',
-		name: m.fn_category_logic(),
+		name: m.fn_category_logic,
 		functionIds: ['equals', 'less_than', 'greater_than', 'if', 'and', 'or', 'not']
 	},
 	{
 		id: 'text',
-		name: m.fn_category_text(),
+		name: m.fn_category_text,
 		functionIds: [
 			'concatenate',
 			'length',
@@ -779,7 +764,7 @@ export const nodeFunctionCategories = [
 	},
 	{
 		id: 'time',
-		name: m.fn_category_time(),
+		name: m.fn_category_time,
 		functionIds: [
 			'now',
 			'today',
@@ -795,7 +780,7 @@ export const nodeFunctionCategories = [
 	},
 	{
 		id: 'misc',
-		name: m.fn_category_misc(),
+		name: m.fn_category_misc,
 		functionIds: ['count', 'gabriel']
 	}
 ];
