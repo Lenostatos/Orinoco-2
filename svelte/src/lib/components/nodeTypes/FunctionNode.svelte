@@ -4,7 +4,7 @@
 	import {
 		type NodeProps,
 		useSvelteFlow,
-		useHandleConnections,
+		useNodeConnections,
 		useNodesData,
 		Position
 	} from '@xyflow/svelte';
@@ -21,9 +21,9 @@
 		fromStore(
 			// This function call is hard to read for me
 			// It means: get the connections to all nodes which are a source for this node here
-			useHandleConnections({
-				nodeId: thisId,
-				type: 'target'
+			useNodeConnections({
+				id: thisId,
+				handleType: 'target'
 			})
 		).current
 	);
