@@ -12,6 +12,7 @@
 	} from '@xyflow/svelte';
 	import { fromStore } from 'svelte/store';
 	import CustomHandle from '../CustomHandle.svelte';
+	import DeletableNode from '../DeletableNode.svelte';
 
 	interface ValueNodeProps extends NodeProps {
 		data: ValueNodeData;
@@ -64,7 +65,7 @@
 	});
 </script>
 
-<div>
+<DeletableNode nodeId={thisId}>
 	<CustomHandle
 		type="target"
 		position={Position.Top}
@@ -78,4 +79,4 @@
 		/>
 	</div>
 	<CustomHandle type="source" position={Position.Bottom} />
-</div>
+</DeletableNode>

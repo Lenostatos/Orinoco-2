@@ -12,6 +12,7 @@
 	import { fly } from 'svelte/transition';
 	import CustomHandle from '../CustomHandle.svelte';
 	import * as m from '$lib/paraglide/messages';
+	import DeletableNode from '../DeletableNode.svelte';
 
 	let { id: thisId, data }: NodeProps = $props();
 
@@ -154,7 +155,7 @@
 
 <svelte:document onclick={() => (open = false)} />
 
-<div class="">
+<DeletableNode nodeId={thisId}>
 	<CustomHandle
 		type="target"
 		position={Position.Top}
@@ -217,4 +218,4 @@
 		</div>
 	</div>
 	<CustomHandle type="source" position={Position.Bottom} />
-</div>
+</DeletableNode>
