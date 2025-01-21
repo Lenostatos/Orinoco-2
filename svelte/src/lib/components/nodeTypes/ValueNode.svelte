@@ -4,7 +4,6 @@
 
 <script lang="ts">
 	import {
-		Handle,
 		Position,
 		type NodeProps,
 		useSvelteFlow,
@@ -73,7 +72,7 @@
 	/>
 	<div>
 		<input
-			{value}
+			value={value ? value : ''}
 			oninput={(event) => updateNodeData(thisId, { text: event.currentTarget.value })}
 			readonly={isOutput}
 		/>
