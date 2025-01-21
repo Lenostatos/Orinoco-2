@@ -148,6 +148,9 @@
 			>
 				{#if selectedFunctionId}
 					<p class="font-bold">{selectedFunctionData?.names[0]()}</p>
+					{#if data.text}
+						<div class="min-w-44 text-sm">= {data.text}</div>
+					{/if}
 				{:else}
 					<p class="italic">{m.function_selection_prompt()}</p>
 				{/if}
@@ -191,6 +194,5 @@
 			{/if}
 		</div>
 	</div>
-	<div>{data.text}</div>
 	<CustomHandle type="source" position={Position.Bottom} />
 </div>
