@@ -1,4 +1,4 @@
-<script module>
+<script module lang="ts">
 	const dndTypeKey = Symbol('dndType');
 
 	export type DnDType = { type: string | null };
