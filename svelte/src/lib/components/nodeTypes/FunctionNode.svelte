@@ -72,6 +72,8 @@
 		return selectedFunctionData.inputs.length;
 	});
 
+	let calculationError: undefined | unknown = $state(undefined);
+
 	$effect(() => {
 		if (!selectedFunctionData) {
 			updateNodeData(thisId, { text: undefined });
@@ -114,10 +116,28 @@
 		if (functionInputs.includes(undefined)) {
 			updateNodeData(thisId, { text: undefined });
 		} else {
-			updateNodeData(thisId, {
-				text: selectedFunctionData
+			let res;
+
+			try {
+				res = selectedFunctionData
 					.function(...(functionInputs as Array<string | number | boolean>))
-					.toString()
+					.toString();
+
+				calculationError = undefined;
+			} catch (error) {
+				console.error(
+					'Produced error during calculation with function',
+					selectedFunctionData.names[0](),
+					error
+				);
+
+				calculationError = error;
+
+				res = undefined;
+			}
+
+			updateNodeData(thisId, {
+				text: res
 			});
 		}
 	});
@@ -148,7 +168,9 @@
 			>
 				{#if selectedFunctionId}
 					<p class="font-bold">{selectedFunctionData?.names[0]()}</p>
-					{#if data.text}
+					{#if calculationError}
+						<div class="min-w-44 text-sm bg-red-500">{m.error_alert()}</div>
+					{:else if data.text}
 						<div class="min-w-44 text-sm">= {data.text}</div>
 					{/if}
 				{:else}

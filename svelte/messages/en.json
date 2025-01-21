@@ -20,6 +20,8 @@
 	"value_node": "Value",
 	"function_node": "Function",
 
+	"error_alert": "Error!",
+
 	"function_selection_prompt": "select a function",
 
 	"fn_sum": "SUM",
