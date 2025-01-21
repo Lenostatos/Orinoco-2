@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { getDnDTypeContext, type DnDType } from './DnDTypeContext.svelte';
 	import * as m from '$lib/paraglide/messages';
+	import { i18n } from '$lib/i18n.js';
+	import { page } from '$app/state';
 
 	const dnd: DnDType = getDnDTypeContext();
 
@@ -40,7 +42,7 @@
 		{@render button('functionNode')}
 	</div>
 	<div class="absolute top-2 right-2">
-		<a href="/" hreflang="de">DE</a> |
-		<a href="/" hreflang="en">EN</a>
+		<a href={i18n.route(page.url.pathname)} hreflang="de">DE</a> |
+		<a href={i18n.route(page.url.pathname)} hreflang="en">EN</a>
 	</div>
 </aside>
