@@ -71,12 +71,11 @@
 		position={Position.Top}
 		isConnectable={sourceConnections.length <= 1}
 	/>
-	<div>
-		<input
-			value={value ? value : ''}
-			oninput={(event) => updateNodeData(thisId, { text: event.currentTarget.value })}
-			readonly={isOutput}
-		/>
-	</div>
+	<input
+		class="w-40"
+		value={value ? value : ''}
+		oninput={(event) => updateNodeData(thisId, { text: event.currentTarget.value })}
+		readonly={isOutput}
+	/>
 	<CustomHandle type="source" position={Position.Bottom} />
 </DeletableNode>
