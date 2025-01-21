@@ -60,18 +60,35 @@
 
 	const selectedFunctionData = $derived(getFunctionData(selectedFunctionId));
 
+	const numInputs = $derived.by(() => {
+		if (!selectedFunctionData) {
+			return 0;
+		}
+
+		if (selectedFunctionData.inputs.length === 1 && selectedFunctionData.inputs[0].arrayInput) {
+			return Infinity;
+		}
+
+		return selectedFunctionData.inputs.length;
+	});
+
 	$effect(() => {
+		if (!selectedFunctionData) {
+			updateNodeData(thisId, { text: undefined });
+			return;
+		}
+
+		if (numInputs === 0) {
+			updateNodeData(thisId, { text: selectedFunctionData.function().toString() });
+			return;
+		}
+
 		if (!sourceNodeTexts) {
 			updateNodeData(thisId, { text: undefined });
 			return;
 		}
 
 		if (sourceNodeTexts.find((t) => t === undefined)) {
-			updateNodeData(thisId, { text: undefined });
-			return;
-		}
-
-		if (!selectedFunctionData) {
 			updateNodeData(thisId, { text: undefined });
 			return;
 		}
@@ -113,18 +130,6 @@
 			fn(event);
 		};
 	}
-
-	const numInputs = $derived.by(() => {
-		if (!selectedFunctionData) {
-			return 0;
-		}
-
-		if (selectedFunctionData.inputs.length === 1 && selectedFunctionData.inputs[0].arrayInput) {
-			return Infinity;
-		}
-
-		return selectedFunctionData.inputs.length;
-	});
 </script>
 
 <svelte:document onclick={() => (open = false)} />
