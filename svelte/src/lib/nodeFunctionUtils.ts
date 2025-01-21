@@ -38,7 +38,13 @@ export function getParsingFunctionFor(outputType: 'any' | 'string' | 'number' | 
 		case 'boolean':
 			parsingFunction = (input: InputType) => {
 				if (typeof input === 'string') {
-					return input === 'true';
+					if (input === 'true') {
+						return true;
+					}
+					if (input === 'false') {
+						return false;
+					}
+					return undefined;
 				}
 				if (typeof input === 'number') {
 					return undefined;
