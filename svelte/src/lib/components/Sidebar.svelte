@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { getDnDTypeContext, type DnDType } from './DnDTypeContext.svelte';
-	import { useSvelteFlow } from '@xyflow/svelte';
 	import * as m from '$lib/paraglide/messages';
-
-	const { getNode, updateNode } = useSvelteFlow();
 
 	const dnd: DnDType = getDnDTypeContext();
 
@@ -36,10 +33,14 @@
 	</div>
 {/snippet}
 
-<aside class="w-full bg-gray-100 text-xs flex flex-col justify-center items-center">
+<aside class="relative w-full bg-gray-100 text-xs flex flex-col justify-center items-center">
 	<div class="my-4 text-sm">{m.draggable_nodes_hint()}</div>
 	<div class="flex justify-center items-center">
 		{@render button('valueNode')}
 		{@render button('functionNode')}
+	</div>
+	<div class="absolute top-2 right-2">
+		<a href="/" hreflang="de">DE</a> |
+		<a href="/" hreflang="en">EN</a>
 	</div>
 </aside>

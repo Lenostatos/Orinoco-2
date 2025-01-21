@@ -50,7 +50,7 @@
 		return sourceNodeDataTexts as Array<string | undefined>;
 	});
 
-	let selectedFunctionId: string | undefined = $state(undefined);
+	const selectedFunctionId = $derived(data.selectedFunctionId as string | undefined);
 
 	const getFunctionData = (functionId: string | undefined) => {
 		if (!functionId) {
@@ -202,7 +202,7 @@
 												functionId === selectedFunctionId && 'rounded-sm bg-sky-300'
 											]}
 											onclick={stopPropagation(() => {
-												selectedFunctionId = functionId;
+												updateNodeData(thisId, { selectedFunctionId: functionId });
 												open = false;
 											})}
 										>
