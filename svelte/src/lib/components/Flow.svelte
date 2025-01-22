@@ -71,7 +71,6 @@
 		edges={edgesStore}
 		{nodeTypes}
 		{edgeTypes}
-		fitView
 		{ondragover}
 		{ondrop}
 		defaultEdgeOptions={{
