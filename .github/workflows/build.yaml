@@ -25,10 +25,8 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
       - name: Install everything
         run: pnpm install
-        working-directory: .
       - name: Build app
         run: pnpm run build
-        working-directory: .
         
   test:
     needs: build
