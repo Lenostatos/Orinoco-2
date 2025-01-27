@@ -37,7 +37,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          package_json_file: svelte/package.json
+          package_json_file: package.json
       - name: Setup Node.js environment
         uses: actions/setup-node@v4.1.0
         with:
@@ -70,7 +70,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          package_json_file: svelte/package.json
+          package_json_file: package.json
       - name: Setup Node.js environment
         uses: actions/setup-node@v4.1.0
         with:
