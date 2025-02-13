@@ -156,11 +156,7 @@
 <svelte:document onclick={() => (open = false)} />
 
 <DeletableNode nodeId={thisId}>
-	<CustomHandle
-		type="target"
-		position={Position.Top}
-		isConnectable={sourceConnections.length < numInputs}
-	/>
+	<CustomHandle type="target" position={Position.Top} />
 	<div class="rounded-full bg-sky-400 min-w-52 flex flex-col items-center">
 		<div class="p-2 self-stretch">
 			<button
